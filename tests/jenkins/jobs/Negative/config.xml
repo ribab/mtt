@@ -12,11 +12,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <org.jenkins.plugins.lockableresources.RequiredResourcesProperty plugin="lockable-resources@1.8">
-      <resourceNames>COMPUTE_NODE_NAMES_VAR</resourceNames>
-      <resourceNamesVar>COMPUTE_HOSTS</resourceNamesVar>
-      <resourceNumber>SLAVE_NODE_NUM_COMPUTES_VAR</resourceNumber>
-    </org.jenkins.plugins.lockableresources.RequiredResourcesProperty>
     <com.sonyericsson.jenkins.plugins.externalresource.dispatcher.SelectionCriteria plugin="externalresource-dispatcher@1.1.0">
       <selectionEnabled>false</selectionEnabled>
       <resourceSelectionList>
