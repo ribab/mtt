@@ -55,7 +55,7 @@ class Copytree(BaseMTTUtility):
             log['stderr'] = "Src directory not specified"
             return
         # define the dst directory
-        dst = os.path.join(testDef.options['scratchdir'], log['section'].replace(":","_"))
+        dst = log['section'].replace(":","_")
         # record the location
         log['location'] = dst
         # Check if already exists to skip if ASIS is set

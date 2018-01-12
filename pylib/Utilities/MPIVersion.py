@@ -81,7 +81,6 @@ class MPIVersion(BaseMTTUtility):
         return
 
     def get_version_string(self, testDef):
-        os.chdir(testDef.options['scratchdir'])
 
         try:
             fh = open("mpi_get_version.c", "r")
@@ -121,7 +120,5 @@ int main(int argc, char **argv) {
                 if 0 != status:
                     os.chdir("..")
                     return None
-
-        os.chdir("..")
 
         return "\n".join(stdout)

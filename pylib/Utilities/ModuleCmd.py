@@ -63,7 +63,7 @@ class ModuleCmd(BaseMTTUtility):
                 return
         try:
             # scratchdir defaults to mttscratch if not set
-            self.env_module_link = os.path.join(options['scratchdir'], "env_modules_python.py")
+            self.env_module_link = "env_modules_python.py"
             if os.path.isfile(self.env_module_link):
                 os.remove(self.env_module_link)
             # create a soft link that includes the .py extension; the tcl python module file does not include this

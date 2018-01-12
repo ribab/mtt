@@ -124,7 +124,7 @@ class OMPI_Snapshot(FetchMTTTool):
         # record our current location
         cwd = os.getcwd()
 
-        dst = os.path.join(testDef.options['scratchdir'], log['section'].replace(":","_"))
+        dst = log['section'].replace(":","_")
         try:
             if not os.path.exists(dst): os.mkdir(dst)
         except:

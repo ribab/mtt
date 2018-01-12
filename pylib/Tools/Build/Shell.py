@@ -136,13 +136,8 @@ class Shell(BuildMTTTool):
             log['status'] = 1
             log['stderr'] = "Parent not specified"
             return
-        try:
-            parentloc = os.path.join(os.getcwd(),log['options']['scratch'])
-            location = parentloc
-        except KeyError:
-            log['status'] = 1
-            log['stderr'] = "No scratch directory in log"
-            return
+        parentloc = os.getcwd()
+        location = parentloc
         if parentlog is not None:
             try:
                 parentloc = parentlog['location']

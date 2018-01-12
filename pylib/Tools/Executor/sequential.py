@@ -233,11 +233,17 @@ class SequentialEx(ExecutorMTTTool):
                         testDef.logger.logResults(title, stageLog)
                         continue
 
+                cwd = os.getcwd()
+                os.chdir(testDef.options['scratchdir'])
+
                 # execute the provided test description and capture the result
                 testDef.logger.stage_start_print(title, plugin.print_name())
                 plugin.execute(stageLog, keyvals, testDef)
                 testDef.logger.stage_end_print(title, plugin.print_name(), stageLog)
                 testDef.logger.logResults(title, stageLog)
+
+                os.chdir(cwd)
+
                 if testDef.options['stop_on_fail'] is not False and stageLog['status'] != 0:
                     print("Section " + stageLog['section'] + ": Status " + str(stageLog['status']))
                     try:
