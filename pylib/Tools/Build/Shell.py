@@ -90,10 +90,12 @@ class Shell(BuildMTTTool):
             self.allocated = True
             allocate_cmdargs = shlex.split(cmds['allocate_cmd'])
             results = testDef.execmd.execute(cmds, allocate_cmdargs, testDef)
+            if 'slurm_job_ids' in results:
+                log['slurm_job_ids'] = results['slurm_job_ids'] + (log['slurm_job_ids'] if 'slurm_job_ids' in log else [])
             if 0 != results['status']:
                 self.allocated = False
                 log['status'] = results['status']
-                if log['stderr']:
+                if 'stderr' in log:
                     log['stderr'].extend(results['stderr'])
                 else:
                     log['stderr'] = results['stderr']
@@ -101,17 +103,30 @@ class Shell(BuildMTTTool):
         return True
 
     def deallocate(self, log, cmds, testDef):
+        if 'slurm_job_ids' in log:
+            for slurm_jobid in log['slurm_job_ids']:
+                results = testDef.execmd.execute(cmds, ['scancel', str(slurm_jobid)], testDef)
+                if 0 != results['status']:
+                    log['status'] = results['status']
+                    if 'stderr' in log:
+                        log['stderr'].extend(results['stderr'])
+                    else:
+                        log['stderr'] = results['stderr']
+                    return False
+            self.allocated = False
+
         if cmds['allocate_cmd'] is not None and cmds['deallocate_cmd'] is not None and self.allocated == True:
             deallocate_cmdargs = shlex.split(cmds['deallocate_cmd'])
             results = testDef.execmd.execute(cmds, deallocate_cmdargs, testDef)
             if 0 != results['status']:
                 log['status'] = results['status']
-                if log['stderr']:
+                if 'stderr' in log:
                     log['stderr'].extend(results['stderr'])
                 else:
                     log['stderr'] = results['stderr']
                 return False
             self.allocated = False
+
         return True
 
     def execute(self, log, keyvals, testDef):

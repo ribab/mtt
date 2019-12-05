@@ -169,7 +169,7 @@ class ExecuteCmd(BaseMTTUtility):
         except:
             pass
 
-        return slurm_jobids
+        return list(set(slurm_jobids))
 
 
     def execute(self, options, cmdargs, testDef, quiet=False):
